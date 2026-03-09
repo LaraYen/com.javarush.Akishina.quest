@@ -1,15 +1,16 @@
 package com.javarush.akishina;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javarush.akishina.entity.Quest;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 
+@Slf4j
 public final class QuestLoader {
 
     private final ObjectMapper objectMapper;
@@ -18,38 +19,56 @@ public final class QuestLoader {
         this.objectMapper = new ObjectMapper();
     }
 
-    public Quest loadFromResource(String resourcePath) throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
-        if (inputStream == null) {
-            throw new IOException("Resource not found: " + resourcePath);
-        }
-        return objectMapper.readValue(inputStream, Quest.class);
-    }
+    public Map<String, Quest> loadQuests() {
 
-    public Map<String, Quest> loadQuests() throws IOException, URISyntaxException {
-
-        URL resourceUrl = getClass().getClassLoader().getResource(".");
-        if (resourceUrl == null) {
-            throw new IOException("Папка resources не найдена");
-        }
-
-        File resourcesDir = new File(resourceUrl.toURI());
         Map<String, Quest> result = new HashMap<>();
-        //List<Quest> results = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
+        List<String> questFileNameList = loadQuestFileNameList();
 
-        for (File file : Objects.requireNonNull(resourcesDir.listFiles())) {
-            if (file.isFile() && file.getName().endsWith("nlo-quest.json")) {
-                Quest quest = mapper.readValue(file, Quest.class);
-                result.put(quest.getTitle(), quest);
-                System.out.println("Обработан файл: " + file.getName());
-            }
+        if (!questFileNameList.isEmpty()) {
+            questFileNameList.forEach(qfn -> {
+                Quest quest = parseQuestFromJson(qfn);
+                if (quest != null) {
+                    result.put(quest.getTitle(), quest);
+                }
+            });
         }
 
         return result;
-
     }
 
+    private List<String> loadQuestFileNameList() {
 
+        List<String> questFiles = new ArrayList<>();
 
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("quests/quest-list.json")){
+
+            if (inputStream == null) {
+                log.error("Файл со списком квестов не найден: quests/index.json");
+                throw new FileNotFoundException("Файл со списком квестов не найден: quests/index.json");
+            }
+            questFiles = objectMapper.readValue(inputStream, new TypeReference<List<String>>() {});
+
+        } catch (IOException e) {
+            log.warn("Ошибка при обработке файла со списком квестов.");
+            return null;
+        }
+
+        return questFiles;
+    }
+
+    private Quest parseQuestFromJson(String fileName) {
+
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("quests/" + fileName)) {
+
+            if (is == null) {
+                log.warn("Файл квеста не найден: quests/{}", fileName);
+                return null;
+            }
+
+            return objectMapper.readValue(is, Quest.class);
+        } catch (IOException e) {
+            log.warn("Ошибка при обработке файла квеста: {}", fileName, e);
+            return null;
+        }
+    }
 }

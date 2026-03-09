@@ -26,11 +26,7 @@ public class QuestsServlet extends HttpServlet {
         session.removeAttribute("currQuest");
         session.removeAttribute("currScene");
 
-        try {
-            questsMap = new QuestLoader().loadQuests();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        questsMap = new QuestLoader().loadQuests();
 
         req.getSession().setAttribute("quests", questsMap);
         req.getRequestDispatcher("/WEB-INF/quests.jsp").forward(req, resp);
