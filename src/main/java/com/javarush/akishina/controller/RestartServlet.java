@@ -15,7 +15,7 @@ import java.io.IOException;
 @WebServlet(name = "restart-servlet", value = "/restart-quest")
 public class RestartServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         QuestSession session = new QuestSession(req.getSession());
         Quest currQuest = session.getCurrentQuest();

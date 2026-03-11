@@ -2,7 +2,6 @@ package com.javarush.akishina;
 
 import com.javarush.akishina.entity.Quest;
 import com.javarush.akishina.entity.Scene;
-import com.javarush.akishina.exception.WrongAttributeException;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.HashMap;
@@ -98,7 +97,7 @@ public class QuestSession {
     }
 
     public void incrementWinQuest() {
-        setWinCount(getWinCount() + 1);;
+        setWinCount(getWinCount() + 1);
     }
 
     public void incrementDefeatQuest() {
