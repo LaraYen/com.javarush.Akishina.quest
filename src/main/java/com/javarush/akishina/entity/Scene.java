@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +14,10 @@ public class Scene {
     private int id;
     private String title;
     private String description;
-    private List<Action> actionsList;
+    private Outcome outcome;
+    private Action[] actions;
 
+    public boolean isFinalScene() {
+        return outcome != Outcome.NONE;
+    }
 }

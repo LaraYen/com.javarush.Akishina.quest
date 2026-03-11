@@ -13,7 +13,7 @@
         <div class="container">
             <form action="${pageContext.request.contextPath}" method="post" id="questForm">
                 <label for="nameInput">Введите имя</label>
-                <input type="text" id="nameInput" name="name" placeholder="Например, Иван">
+                <input type="text" id="nameInput" name="userName" placeholder="Например, Иван">
                 <br>
                 <button type="submit">
                     Отправить

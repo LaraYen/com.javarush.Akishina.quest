@@ -1,25 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Alino
-  Date: 04.03.2026
-  Time: 1:33
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<h1>Список доступных квестов:</h1>
+<h1>Добро пожаловать, ${sessionScope.userName}</h1>
+<h2>Список доступных квестов:</h2>
 
-<c:forEach var="entry" items="${quests}">
+<c:forEach var="entry" items="${questsMap}">
     <div class="quest-card">
         <h3>${entry.key}</h3>
         <p>${entry.value.getDescription()}</p>
-        <button onclick="location.href='${pageContext.request.contextPath}/quest-scene?questName=${entry.key}'">
-            Играть
-        </button>
+        <form action="${pageContext.request.contextPath}/quests" method="post" style="display: inline;">
+            <input type="hidden" name="questName" value="${entry.key}">
+            <button class="button" type="submit" >Играть</button>
+        </form>
     </div>
 </c:forEach>
+
+<footer style="margin-top: 40px; padding: 10px; background-color: #f5f5f5; border-top: 1px solid #ddd; font-size: 12px; color: #666; text-align: left;">
+    <div>
+        <span>Игрок: ${sessionScope.userName != null ? sessionScope.userName : 'Гость'}</span>
+        <span style="margin-left: 20px;">IP: ${sessionScope.clientIp != null ? sessionScope.clientIp : pageContext.request.remoteAddr}</span>
+        <span style="margin-left: 20px;">Завершено квестов: ${sessionScope.completedQuests != null ? sessionScope.completedQuests : 0}</span>
+        <span style="margin-left: 20px;">Количество побед: ${sessionScope.winCount != null ? sessionScope.winCount : 0}</span>
+        <span style="margin-left: 20px;">Количество поражений: ${sessionScope.defeatCount != null ? sessionScope.defeatCount : 0}</span>
+    </div>
+</footer>
 
 <style>
     .button {

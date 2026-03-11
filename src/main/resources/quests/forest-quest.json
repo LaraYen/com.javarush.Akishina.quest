@@ -7,7 +7,8 @@
       "id": 1,
       "title": "Опушка леса",
       "description": "Вы стоите на опушке леса. Солнце садится, скоро стемнеет. Видите две тропинки.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Пойти по левой тропинке",
           "nextSceneId": 2
@@ -22,7 +23,8 @@
       "id": 2,
       "title": "Лесная поляна",
       "description": "Вы выходите на поляну, полную цветов. В центре стоит старый пень.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Осмотреть пень",
           "nextSceneId": 4
@@ -37,7 +39,8 @@
       "id": 3,
       "title": "Болото",
       "description": "Правая тропинка привела вас к болоту. Кругом кочки и туман.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Попытаться пройти через болото",
           "nextSceneId": 6
@@ -52,7 +55,8 @@
       "id": 4,
       "title": "Тайник в пне",
       "description": "В пне вы находите ржавый ключ. Интересно, от чего он?",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Взять ключ и идти дальше",
           "nextSceneId": 5
@@ -67,7 +71,8 @@
       "id": 5,
       "title": "Старая хижина",
       "description": "В глубине леса вы видите старую хижину. Дверь заперта на замок.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Попробовать открыть дверь",
           "nextSceneId": 7
@@ -86,13 +91,15 @@
       "id": 6,
       "title": "Трясина",
       "description": "Провал! Вы утонули в трясине.",
-      "actionsList": []
+      "outcome": "defeat",
+      "actions": []
     },
     "7": {
       "id": 7,
       "title": "Внутри хижины",
       "description": "Дверь открывается! Внутри темно и пыльно, но на столе горит свеча и лежит карта.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Взять карту",
           "nextSceneId": 9
@@ -103,7 +110,8 @@
       "id": 8,
       "title": "Никого нет",
       "description": "Никто не отвечает. Тишина...",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Попробовать открыть дверь",
           "nextSceneId": 7
@@ -118,7 +126,8 @@
       "id": 9,
       "title": "Карта сокровищ",
       "description": "На карте отмечен выход из леса! Вы следуете по карте и выходите к дороге.",
-      "actionsList": [
+      "outcome": "none",
+      "actions": [
         {
           "text": "Выйти из леса (победа!)",
           "nextSceneId": 10
@@ -129,7 +138,8 @@
       "id": 10,
       "title": "КОНЕЦ",
       "description": "Вы выбрались из леса! Приключение окончено.",
-      "actionsList": []
+      "outcome": "victory",
+      "actions": []
     }
   }
 }

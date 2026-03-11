@@ -1,11 +1,11 @@
 package com.javarush.akishina;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javarush.akishina.entity.Quest;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -17,6 +17,7 @@ public final class QuestLoader {
 
     public QuestLoader() {
         this.objectMapper = new ObjectMapper();
+        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true);
     }
 
     public Map<String, Quest> loadQuests() {
@@ -43,8 +44,8 @@ public final class QuestLoader {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("quests/quest-list.json")){
 
             if (inputStream == null) {
-                log.error("Файл со списком квестов не найден: quests/index.json");
-                throw new FileNotFoundException("Файл со списком квестов не найден: quests/index.json");
+                log.error("Файл со списком квестов не найден: quests/quest-list.json");
+                return questFiles;
             }
             questFiles = objectMapper.readValue(inputStream, new TypeReference<List<String>>() {});
 
@@ -53,6 +54,7 @@ public final class QuestLoader {
             return null;
         }
 
+        log.debug("Список файлов с квестами: {}", questFiles);
         return questFiles;
     }
 
@@ -66,6 +68,7 @@ public final class QuestLoader {
             }
 
             return objectMapper.readValue(is, Quest.class);
+
         } catch (IOException e) {
             log.warn("Ошибка при обработке файла квеста: {}", fileName, e);
             return null;
