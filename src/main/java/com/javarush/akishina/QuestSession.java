@@ -97,10 +97,12 @@ public class QuestSession {
     }
 
     public void incrementWinQuest() {
+        incrementCompletedQuest();
         setWinCount(getWinCount() + 1);
     }
 
     public void incrementDefeatQuest() {
+        incrementCompletedQuest();
         setDefeatCount(getDefeatCount() + 1);
     }
 

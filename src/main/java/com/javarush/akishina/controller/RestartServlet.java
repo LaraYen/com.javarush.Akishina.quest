@@ -24,9 +24,8 @@ public class RestartServlet extends HttpServlet {
             session.incrementDefeatQuest();
         }
 
-        session.incrementCompletedQuest();
         session.setCurrentScene(currQuest.getFirstScene());
-        log.info("Квест сброшен.");
+        log.info("Квест {} сброшен.", currQuest);
 
         resp.sendRedirect(req.getContextPath() + "/quest-scene");
 

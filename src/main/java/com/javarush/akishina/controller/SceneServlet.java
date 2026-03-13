@@ -25,7 +25,7 @@ public class SceneServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         QuestSession session = new QuestSession(req.getSession());
         int actionIndex = Integer.parseInt(req.getParameter("actionIndex"));
@@ -39,12 +39,13 @@ public class SceneServlet extends HttpServlet {
         session.setCurrentScene(currScene);
 
         if (currScene.isFinalScene()) {
-            session.incrementCompletedQuest();
+
             if (currScene.getOutcome() == Outcome.VICTORY) {
                 session.incrementWinQuest();
             } else {
                 session.incrementDefeatQuest();
             }
+
         }
 
         resp.sendRedirect(req.getContextPath() + "/quest-scene");
