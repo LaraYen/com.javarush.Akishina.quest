@@ -8,17 +8,16 @@
     <title>Сайт с квестами</title>
     <link href="<c:url value='/static/main.css'/>" rel="stylesheet">
 </head>
-    <body>
-        <h1>Сайт с квестами!</h1>
-        <div class="container">
-            <form action="${pageContext.request.contextPath}" method="post" id="questForm">
-                <label for="nameInput">Введите имя</label>
-                <input type="text" id="nameInput" name="userName" placeholder="Например, Иван">
-                <br>
-                <button type="submit">
-                    Отправить
-                </button>
-            </form>
+<body>
+<div class="container">
+    <h1>Сайт с квестами!</h1>
+    <form action="${pageContext.request.contextPath}" method="post" id="questForm">
+        <div class="form-group">
+            <label for="nameInput">Введите имя</label>
+            <input type="text" id="nameInput" name="userName" placeholder="Например, Иван">
         </div>
-    </body>
+        <button type="submit" class="btn-submit">Отправить</button>
+    </form>
+</div>
+</body>
 </html>
