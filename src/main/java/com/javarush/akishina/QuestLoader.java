@@ -44,7 +44,7 @@ public final class QuestLoader {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("quests/quest-list.json")){
 
             if (inputStream == null) {
-                log.error("Файл со списком квестов не найден: quests/quest-list.json");
+                log.warn("Файл со списком квестов не найден: quests/quest-list.json");
                 return questFiles;
             }
             questFiles = objectMapper.readValue(inputStream, new TypeReference<List<String>>() {});
