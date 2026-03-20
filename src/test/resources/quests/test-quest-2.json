@@ -1,0 +1,41 @@
+{
+  "title": "тест2",
+  "description": "тест описание2",
+  "firstSceneId": "1",
+  "scenesMap": {
+    "1": {
+      "id": "1",
+      "title": "тест сцена 1",
+      "description": "тест описание сцены 1",
+      "outcome": "none",
+      "actions": [
+        {
+          "text": "Победа",
+          "nextSceneId": "1"
+        },
+        {
+          "text": "Провал",
+          "nextSceneId": "2"
+        },
+        {
+          "text": "Провал",
+          "nextSceneId": "3"
+        }
+      ]
+    },
+    "2": {
+      "id": "2",
+      "title": "тест сцена 2",
+      "description": "тест описание сцены 2",
+      "outcome": "defeat",
+      "actions": []
+    },
+    "3": {
+      "id": "3",
+      "title": "тест сцена 3",
+      "description": "тест описание сцены 3",
+      "outcome": "victory",
+      "actions": []
+    }
+  }
+}

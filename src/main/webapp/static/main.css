@@ -9,7 +9,6 @@ body {
     flex-direction: column;
 }
 
-/* Базовый контейнер (для всех страниц) */
 .container {
     max-width: 900px;
     margin: 20px auto;
@@ -21,12 +20,10 @@ body {
     box-sizing: border-box;
 }
 
-/* Для страниц с футером – контейнер растягивается */
 .container-flex {
     flex: 1 0 auto;
 }
 
-/* Футер */
 .footer {
     flex-shrink: 0;
     padding: 15px;
@@ -39,7 +36,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Заголовки */
 h1, h2, h3 {
     color: #333;
     margin-top: 0;
@@ -56,7 +52,6 @@ h2 {
     color: #555;
 }
 
-/* Основные кнопки (зеленые) */
 .btn-primary {
     display: inline-block;
     padding: 10px 20px;
@@ -74,7 +69,6 @@ h2 {
     background-color: #45a049;
 }
 
-/* Второстепенные кнопки (навигация) */
 .btn-secondary {
     background-color: transparent;
     color: #666;
@@ -91,7 +85,6 @@ h2 {
     color: #333;
 }
 
-/* Карточка квеста */
 .quest-card {
     border: 1px solid #ccc;
     padding: 15px;
@@ -100,7 +93,6 @@ h2 {
     background-color: #f9f9f9;
 }
 
-/* Разделитель */
 .separator {
     margin: 30px 0 20px 0;
     border: 1px solid #ddd;
@@ -110,7 +102,6 @@ h2 {
     margin: 0 10px;
 }
 
-/* Форма на главной */
 .form-group {
     margin-bottom: 15px;
 }
@@ -129,7 +120,6 @@ h2 {
     box-sizing: border-box;
 }
 
-/* Кнопка отправки */
 .btn-submit {
     width: 100%;
     padding: 12px;
