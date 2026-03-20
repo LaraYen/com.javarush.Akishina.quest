@@ -25,7 +25,7 @@ public final class QuestLoader {
         Map<String, Quest> result = new HashMap<>();
         List<String> questFileNameList = loadQuestFileNameList();
 
-        if (!questFileNameList.isEmpty()) {
+        if (questFileNameList != null && !questFileNameList.isEmpty()) {
             questFileNameList.forEach(qfn -> {
                 Quest quest = parseQuestFromJson(qfn);
                 if (quest != null) {
