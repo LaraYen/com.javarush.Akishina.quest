@@ -1,31 +1,18 @@
 package com.javarush.akishina.controller;
 
-import com.javarush.akishina.SessionAttribute;
-import com.javarush.akishina.entity.Action;
-import com.javarush.akishina.entity.Outcome;
 import com.javarush.akishina.entity.Quest;
 import com.javarush.akishina.entity.Scene;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.javarush.akishina.SessionAttribute.*;
-import static com.javarush.akishina.entity.Outcome.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RestartServletTest extends BaseServletTest {
 
-    private RestartServlet restartServlet = new RestartServlet();
+    private final RestartServlet restartServlet = new RestartServlet();
 
     private Scene finalScene;
 

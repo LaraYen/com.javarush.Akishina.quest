@@ -1,21 +1,15 @@
 package com.javarush.akishina.controller;
 
-import com.javarush.akishina.SessionAttribute;
 import com.javarush.akishina.entity.Quest;
-import com.javarush.akishina.entity.Scene;
 import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 
 import static com.javarush.akishina.SessionAttribute.*;
-import static net.bytebuddy.matcher.ElementMatchers.none;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.yaml.snakeyaml.DumperOptions.LineBreak.WIN;
 
 class SceneServletTest extends BaseServletTest {
 

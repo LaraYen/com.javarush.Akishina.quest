@@ -1,7 +1,6 @@
 package com.javarush.akishina.controller;
 
 import com.javarush.akishina.QuestLoader;
-import com.javarush.akishina.SessionAttribute;
 import com.javarush.akishina.entity.Quest;
 import com.javarush.akishina.entity.Scene;
 import jakarta.servlet.RequestDispatcher;
@@ -15,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Map;
 
 import static com.javarush.akishina.SessionAttribute.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,7 +48,7 @@ public abstract class BaseServletTest {
     }
 
     protected void mockRedirect(String path) {
-        when(request.getContextPath()).thenReturn("");
+        when(request.getContextPath()).thenReturn(path);
     }
 
     protected void mockCurrScene(Scene currScene) {
