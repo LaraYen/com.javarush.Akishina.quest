@@ -21,7 +21,7 @@ public class QuestsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        QuestSession session = new QuestSession(req.getSession());
+        QuestSession session = new QuestSession(req.getSession(false));
 
         session.removeCurrQuest();
 
@@ -36,7 +36,7 @@ public class QuestsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        QuestSession session = new QuestSession(req.getSession());
+        QuestSession session = new QuestSession(req.getSession(false));
 
         Quest currQuest = session.getQuestsMap().get(req.getParameter("questName"));
         Scene currScene = currQuest.getFirstScene();
@@ -44,7 +44,8 @@ public class QuestsServlet extends HttpServlet {
         session.setCurrentQuest(currQuest);
         session.setCurrentScene(currScene);
 
-        log.info("Выбран квест: {}", currQuest);
+        log.info("Выбран квест: {}", currQuest.getTitle());
+        log.info("Идентификатор Scene: {}", currScene.getId());
         resp.sendRedirect(req.getContextPath() + "/quest-scene");
 
     }
