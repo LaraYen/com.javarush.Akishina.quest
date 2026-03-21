@@ -2,7 +2,6 @@ package com.javarush.akishina.controller;
 
 import com.javarush.akishina.QuestSession;
 import com.javarush.akishina.entity.Quest;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ public class RestartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        QuestSession session = new QuestSession(req.getSession());
+        QuestSession session = new QuestSession(req.getSession(false));
         Quest currQuest = session.getCurrentQuest();
 
         if (!session.getCurrentScene().isFinalScene()) {
