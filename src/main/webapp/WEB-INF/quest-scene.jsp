@@ -11,12 +11,12 @@
     <h2>${sessionScope.currScene.title}</h2>
     <p>${sessionScope.currScene.description}</p>
 
-    <c:if test="${not empty sessionScope.currScene.actions}">
+    <c:if test="${not empty actions}">
         <h3>Выберите действие:</h3>
         <div>
-            <c:forEach var="action" items="${sessionScope.currScene.actions}" varStatus="status">
+            <c:forEach var="action" items="${actions}" varStatus="status">
                 <form action="${pageContext.request.contextPath}/quest-scene" method="post" style="display: inline;">
-                    <input type="hidden" name="actionIndex" value="${status.index}">
+                    <input type="hidden" name="actionId" value="${action.id}">
                     <button type="submit" class="btn-primary">${action.text}</button>
                 </form>
             </c:forEach>
@@ -31,7 +31,7 @@
             ← К выбору квестов
         </button>
         <button class="btn-secondary" onclick="location.href='${pageContext.request.contextPath}/restart-quest'">
-            ↻ Начать сначала (Защитается поражение!)
+            ↻ Начать сначала (Защитается поражение, если квест не завершен!)
         </button>
     </div>
 </div>

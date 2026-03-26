@@ -10,12 +10,12 @@
     <h1>Добро пожаловать, ${sessionScope.userName}</h1>
     <h2>Список доступных квестов:</h2>
 
-    <c:forEach var="entry" items="${questsMap}">
+    <c:forEach var="quest" items="${applicationScope.questService.allQuests}">
         <div class="quest-card">
-            <h3>${entry.key}</h3>
-            <p>${entry.value.description}</p>
+            <h3>${quest.title}</h3>
+            <p>${quest.description}</p>
             <form action="${pageContext.request.contextPath}/quests" method="post" style="display: inline;">
-                <input type="hidden" name="questName" value="${entry.key}">
+                <input type="hidden" name="questId" value="${quest.id}">
                 <button type="submit" class="btn-primary">Играть</button>
             </form>
         </div>
