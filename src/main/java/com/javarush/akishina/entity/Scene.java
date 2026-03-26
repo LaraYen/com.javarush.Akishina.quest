@@ -14,11 +14,12 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Scene {
 
-    private int id;
+    private String id;
     private String title;
     private String description;
     private Outcome outcome;
-    private Action[] actions;
+    private String[] actions;
+    private String questId;
 
     public boolean isFinalScene() {
         return outcome != Outcome.NONE;
@@ -28,7 +29,7 @@ public class Scene {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Scene scene = (Scene) o;
-        return id == scene.id && Objects.equals(title, scene.title) && Objects.equals(description, scene.description) && outcome == scene.outcome && Objects.deepEquals(actions, scene.actions);
+        return Objects.equals(id, scene.id) && Objects.equals(title, scene.title) && Objects.equals(description, scene.description) && outcome == scene.outcome && Objects.deepEquals(actions, scene.actions);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.javarush.akishina;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarush.akishina.entity.Action;
 import com.javarush.akishina.entity.Quest;
+import com.javarush.akishina.entity.Scene;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -13,65 +14,59 @@ import java.util.*;
 @Slf4j
 public final class QuestLoader {
 
-    private final ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper = new ObjectMapper() ;
+    private static final String QUESTS_PATH = "quests/quests.json";
+    private static final String SCENES_PATH = "quests/scenes.json";
+    private static final String ACTIONS_PATH = "quests/actions.json";
 
-    public QuestLoader() {
-        this.objectMapper = new ObjectMapper();
-        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true);
-    }
+    public static Map<String, Quest> loadQuests() {
 
-    public Map<String, Quest> loadQuests() {
+        try (InputStream questsStream = getResourceAsStream(QUESTS_PATH)) {
 
-        Map<String, Quest> result = new HashMap<>();
-        List<String> questFileNameList = loadQuestFileNameList();
-
-        if (questFileNameList != null && !questFileNameList.isEmpty()) {
-            questFileNameList.forEach(qfn -> {
-                Quest quest = parseQuestFromJson(qfn);
-                if (quest != null) {
-                    result.put(quest.getTitle(), quest);
-                }
-            });
+            return objectMapper.readValue(questsStream,
+                    new TypeReference<Map<String, Quest>>() {}
+            );
+        } catch (IOException e) {
+            log.warn("Ошибка при загрузке файла {}", QUESTS_PATH);
         }
-
-        return result;
+        return new HashMap<>();
     }
 
-    private List<String> loadQuestFileNameList() {
+    public static Map<String, Scene> loadScenes() {
 
-        List<String> questFiles = new ArrayList<>();
+        try (InputStream scenesStream = getResourceAsStream(SCENES_PATH)) {
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("quests/quest-list.json")){
-
-            if (inputStream == null) {
-                log.warn("Файл со списком квестов не найден: quests/quest-list.json");
-                return questFiles;
-            }
-            questFiles = objectMapper.readValue(inputStream, new TypeReference<List<String>>() {});
+            return objectMapper.readValue(scenesStream,
+                    new TypeReference<Map<String, Scene>>() {}
+            );
 
         } catch (IOException e) {
-            log.warn("Ошибка при обработке файла со списком квестов.");
-            return null;
+            log.warn("Ошибка при загрузке файла {}, текст ошибки: {}", SCENES_PATH, e.getMessage());
         }
 
-        log.debug("Список файлов с квестами: {}", questFiles);
-        return questFiles;
+        return new HashMap<>();
     }
 
-    private Quest parseQuestFromJson(String fileName) {
+    public static Map<String, Action> loadActions() {
 
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("quests/" + fileName)) {
+        try (InputStream actionsStream = getResourceAsStream(ACTIONS_PATH)) {
 
-            if (is == null) {
-                log.warn("Файл квеста не найден: quests/{}", fileName);
-                return null;
-            }
-
-            return objectMapper.readValue(is, Quest.class);
-
+            return objectMapper.readValue(actionsStream,
+                    new TypeReference<Map<String, Action>>() {}
+            );
         } catch (IOException e) {
-            log.warn("Ошибка при обработке файла квеста: {}", fileName, e);
-            return null;
+            log.warn("Ошибка при загрузке файла {}", ACTIONS_PATH);
         }
+        return new HashMap<>();
     }
+
+    private static InputStream getResourceAsStream(String filename) {
+
+        InputStream is = QuestLoader.class.getClassLoader().getResourceAsStream(filename);
+        if (is == null) {
+            throw new RuntimeException("Файл не найден в ресурсах: " + filename);
+        }
+        return is;
+    }
+
 }

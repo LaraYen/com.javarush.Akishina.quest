@@ -3,11 +3,9 @@ package com.javarush.akishina.controller;
 import com.javarush.akishina.QuestSession;
 import com.javarush.akishina.entity.Action;
 import com.javarush.akishina.entity.Outcome;
-import com.javarush.akishina.entity.Quest;
 import com.javarush.akishina.entity.Scene;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +14,14 @@ import java.io.IOException;
 
 @Slf4j
 @WebServlet(name = "sceneServlet", value = "/quest-scene")
-public class SceneServlet extends HttpServlet {
+public class SceneServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        QuestSession session = new QuestSession(req.getSession(false));
+        Scene currScene = session.getCurrentScene();
+        Action[] actions = questService.getActionsByArrayId(currScene.getActions());
+        req.setAttribute("actions", actions);
 
         log.debug("Переход на страницу Scene");
         req.getRequestDispatcher("/WEB-INF/quest-scene.jsp").forward(req, resp);
@@ -29,21 +32,21 @@ public class SceneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         QuestSession session = new QuestSession(req.getSession(false));
-        int actionIndex = Integer.parseInt(req.getParameter("actionIndex"));
-        log.debug("Индекс выбранного действия: {}", actionIndex);
 
-        Quest currQuest = session.getCurrentQuest();
-        Scene currScene = session.getCurrentScene();
-        Action selectedAction = currScene.getActions()[actionIndex];
+        String actionId = req.getParameter("actionId");
+        log.debug("Id выбранного действия: {}", actionId);
 
-        int nextSceneId = selectedAction.getNextSceneId();
-        currScene = currQuest.getScene(nextSceneId);
-        log.info("Изменение текущей Scene на {}", currScene.getId());
-        session.setCurrentScene(currScene);
+        Action selectedAction = questService.getActionById(actionId);
 
-        if (currScene.isFinalScene()) {
+        String nextSceneId = selectedAction.getNextSceneId();
+        Scene newScene = questService.getSceneById(nextSceneId);
+        log.info("Изменение текущей Scene на {}", newScene.getId());
 
-            if (currScene.getOutcome() == Outcome.VICTORY) {
+        session.setCurrentScene(newScene);
+
+        if (newScene.isFinalScene()) {
+
+            if (newScene.getOutcome() == Outcome.VICTORY) {
                 session.incrementWinQuest();
                 log.info("Увеличение счетчика побед.");
             } else {
